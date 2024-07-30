@@ -1,6 +1,6 @@
 # cube-http-client
 
-Pythonic HTTP client for [Cube.dev](https://cube.dev).
+Pythonic HTTP client for [Cube.dev](https://cube.dev) REST API.
 
 ## Installation
 
