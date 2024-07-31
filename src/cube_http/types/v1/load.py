@@ -7,7 +7,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, TypedDict, Union
 from typing_extensions import NotRequired
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, Field
 
 
 class V1LoadResultAnnotation(BaseModel):
@@ -50,13 +50,25 @@ class V1LoadRequestQueryTimeDimension(BaseModel):
     dateRange: Optional[Union[str, List[str]]] = None
 
 
-V1LoadRequestQueryFilterItem = RootModel[
-    Union[
-        V1LoadRequestQueryFilterBase,
-        V1LoadRequestQueryFilterLogicalOr,
-        V1LoadRequestQueryFilterLogicalAnd,
+try:
+    from pydantic import RootModel
+
+    V1LoadRequestQueryFilterItem = RootModel[  # type: ignore
+        Union[
+            V1LoadRequestQueryFilterBase,
+            V1LoadRequestQueryFilterLogicalOr,
+            V1LoadRequestQueryFilterLogicalAnd,
+        ]
     ]
-]
+
+except ImportError:
+
+    class V1LoadRequestQueryFilterItem(BaseModel):  # type: ignore
+        __root__: Union[
+            V1LoadRequestQueryFilterBase,
+            V1LoadRequestQueryFilterLogicalOr,
+            V1LoadRequestQueryFilterLogicalAnd,
+        ]
 
 
 class V1LoadRequestQuery(BaseModel):
