@@ -12,7 +12,7 @@ def test_get_metadata():
             "token": os.getenv("CUBEJS_API_TOKEN", "NOT FOUND"),
         }
     )
-    meta = cube.v1.meta()
+    meta = cube.v1.meta(extended=True)
     assert meta.cubes
     assert len(meta.cubes) > 0
 
