@@ -2,7 +2,7 @@ from functools import cached_property
 
 import httpx
 
-from .resources import V1, AsyncV1
+from .resources.v1 import V1Resources, AsyncV1Resources
 from .types._client import ClientOptions, AsyncClientOptions
 
 
@@ -26,14 +26,12 @@ class Client:
         )
 
     @cached_property
-    def v1(self) -> V1:
-        return V1(self._client)
+    def v1(self) -> V1Resources:
+        return V1Resources(self._client)
 
 
 class AsyncClient:
     """Asynchronous HTTP client"""
-
-    _client: httpx.AsyncClient
 
     def __init__(self, options: AsyncClientOptions) -> None:
         headers = {"Authorization": options["token"]}
@@ -49,5 +47,5 @@ class AsyncClient:
         )
 
     @cached_property
-    def v1(self) -> AsyncV1:
-        return AsyncV1(self._client)
+    def v1(self) -> AsyncV1Resources:
+        return AsyncV1Resources(self._client)

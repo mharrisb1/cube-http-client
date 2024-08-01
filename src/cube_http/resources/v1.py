@@ -1,21 +1,48 @@
 from typing import Optional
 
-from ...exc import LoadV1Error
+from ...exc import LoadV1Error, MetaV1Error
+from ...types.v1.meta import V1MetaResponse
 from ...types.v1.load import (
+    V1LoadRequestQueryDict,
+    V1LoadResponse,
     V1LoadRequest,
     V1LoadRequestQuery,
-    V1LoadResponse,
-    V1LoadRequestQueryDict,
 )
-from ..._utils.serde import model_parse, model_dict
+from ..._utils.serde import model_dict, model_parse
 
-from .._base import AsyncApiResource, SyncApiResource
-
-__all__ = ["Load", "AsyncLoad"]
+from .._base import SyncApiResource, AsyncApiResource
 
 
-class Load(SyncApiResource):
-    def __call__(
+class V1(SyncApiResource):
+    def meta(
+        self,
+        *,
+        extended: Optional[bool] = None,
+    ) -> V1MetaResponse:
+        """
+        Load metadata.
+
+        Parameters:
+            extended: You will receive extended response if this parameter is true
+
+        Returns:
+            V1MetaResponse: The response of the load metadata request
+
+        Raises:
+            MetaV1Error: If the request could not be completed or an internal service error
+        """
+        req = self._client.build_request(
+            "GET",
+            "/v1/meta",
+            params={"extended": extended},
+        )
+        res = self._client.send(req)
+        if res.status_code == 200:
+            return model_parse(V1MetaResponse, res.json())
+        else:
+            raise MetaV1Error.from_response(res)
+
+    def load(
         self,
         *,
         query: Optional[V1LoadRequestQueryDict] = None,
@@ -51,8 +78,36 @@ class Load(SyncApiResource):
             raise LoadV1Error.from_response(res)
 
 
-class AsyncLoad(AsyncApiResource):
-    async def __call__(
+class AsyncV1(AsyncApiResource):
+    async def meta(
+        self,
+        *,
+        extended: Optional[bool] = None,
+    ) -> V1MetaResponse:
+        """
+        Load metadata.
+
+        Parameters:
+            extended: You will receive extended response if this parameter is true
+
+        Returns:
+            V1MetaResponse: The response of the load metadata request
+
+        Raises:
+            MetaV1Error: If the request could not be completed or an internal service error
+        """
+        req = self._client.build_request(
+            "GET",
+            "/v1/meta",
+            params={"extended": extended},
+        )
+        res = await self._client.send(req)
+        if res.status_code == 200:
+            return model_parse(V1MetaResponse, res.json())
+        else:
+            raise MetaV1Error.from_response(res)
+
+    async def load(
         self,
         *,
         query: Optional[V1LoadRequestQueryDict] = None,
