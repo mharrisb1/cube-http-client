@@ -5,6 +5,10 @@ description = "Pythonic HTTP client for Cube.dev REST API"
 authors = ["Michael Harris <mharris@definite.app>"]
 license = "MIT"
 readme = "README.md"
+keywords = ["Cube.js", "Cube", "Analytics"]
+homepage = "https://github.com/mharrisb1/cube-http-client"
+repository = "https://github.com/mharrisb1/cube-http-client"
+documentation = "https://github.com/mharrisb1/cube-http-client"
 packages = [{ include = "cube_http", from = "src" }]
 
 [tool.poetry.dependencies]
