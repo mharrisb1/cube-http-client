@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cube-http-client"
-version = "0.1.6"
+version = "0.1.7"
 description = "Pythonic HTTP client for Cube.dev REST API"
 authors = ["Michael Harris <mharris@definite.app>"]
 license = "MIT"
