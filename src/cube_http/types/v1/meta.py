@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel, Field
 
 
@@ -37,7 +37,7 @@ class V1CubeMetaDimension(BaseModel):
     description: Optional[str] = Field(
         default=None, description="Description of the dimension"
     )
-    format: Optional[str] = Field(
+    format: Optional[Union[str, Dict[str, Any]]] = Field(
         default=None, description="Format of the dimension"
     )
     sql: Optional[str] = Field(default=None, description="SQL for the dimension")
