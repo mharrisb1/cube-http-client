@@ -21,7 +21,7 @@ def test_load_query():
 
 
 @pytest.mark.asyncio
-async def test_async_get_metadata():
+async def test_async_load_query():
     cube = cube_http.AsyncClient(
         {
             "url": os.getenv("CUBEJS_API_URL", "NOT FOUND"),
