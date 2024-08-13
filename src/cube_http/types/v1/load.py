@@ -205,7 +205,7 @@ class V1LoadRequestQuery(BaseModel):
     )
     """List of time dimensions to be used in the query."""
 
-    order: Optional[List[str]] = None
+    order: Optional[V1LoadRequestQueryOrder] = None
     """Ordering criteria for the query, specified as a dictionary of measures 
     or dimensions with `asc` or `desc` values."""
 
