@@ -40,6 +40,20 @@ class V1CubeMetaSegment(BaseModel):
     When set to `False`, the segment cannot be queried through the API. Defaults to `True`."""
 
 
+class V1CubeMetaDimensionLinkFormat(BaseModel):
+    type: Literal["link"]
+    """Format link type. Will always be `link`"""
+
+    label: str
+    """Link label"""
+
+
+V1CubeMetaDimensionFormat = Union[
+    Literal["imageUrl", "id", "link", "currency", "percent"],
+    V1CubeMetaDimensionLinkFormat,
+]
+
+
 class V1CubeMetaDimension(BaseModel):
     name: str = ""
     """The unique identifier for the dimension. 
@@ -60,9 +74,7 @@ class V1CubeMetaDimension(BaseModel):
     type: Literal["time", "string", "number", "boolean", "geo"]
     """A required parameter that specifies the type of data the dimension represents."""
 
-    format: Optional[
-        Literal["imageUrl", "id", "link", "currency", "percent"]
-    ] = None
+    format: Optional[V1CubeMetaDimensionFormat] = None
     """Optional parameter to define how the dimension's output should be formatted. 
     Supported formats include `imageUrl`, `id`, `link`, `currency`, and `percent`."""
 
@@ -123,7 +135,7 @@ class V1CubeMetaMeasure(BaseModel):
     ]
     """A required parameter that specifies the type of aggregation or calculation the measure represents."""
 
-    format: Optional[Literal["percent", "currency"]] = None
+    format: Optional[Literal["percent", "currency", "number"]] = None
     """Defines how the measure's output should be formatted."""
 
     filters: Optional[List[Dict[str, Any]]] = None
