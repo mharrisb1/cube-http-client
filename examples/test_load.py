@@ -13,9 +13,17 @@ def test_load_query():
         }
     )
     cube.v1.load(
-        query={
+        {
             "measures": ["teams.count"],
             "dimensions": ["teams.team_domain"],
+            "limit": 10,
+            "timeDimensions": [
+                {
+                    "dimension": "teams.team_created_at",
+                    "dateRange": "last month",
+                    "granularity": "week",
+                }
+            ],
         },
     )
 
@@ -29,8 +37,16 @@ async def test_async_load_query():
         }
     )
     await cube.v1.load(
-        query={
+        {
             "measures": ["teams.count"],
             "dimensions": ["teams.team_domain"],
+            "limit": 10,
+            "timeDimensions": [
+                {
+                    "dimension": "teams.team_created_at",
+                    "dateRange": "last month",
+                    "granularity": "week",
+                }
+            ],
         },
     )

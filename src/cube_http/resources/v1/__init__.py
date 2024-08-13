@@ -44,7 +44,6 @@ class V1Resources(SyncApiResources):
 
     def load(
         self,
-        *,
         query: Optional[V1LoadRequestQueryDict] = None,
     ) -> V1LoadResponse:
         """
@@ -110,7 +109,6 @@ class AsyncV1Resources(AsyncApiResources):
 
     async def load(
         self,
-        *,
         query: Optional[V1LoadRequestQueryDict] = None,
     ) -> V1LoadResponse:
         """
