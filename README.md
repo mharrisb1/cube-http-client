@@ -22,7 +22,7 @@ cube = cube_http.Client({
 meta = cube.v1.meta()
 
 # load query results
-results = cube.v1.load(query={
+results = cube.v1.load({
   "measures": ["..."],
   "dimensions": ["..."],
 })
