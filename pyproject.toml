@@ -1,11 +1,19 @@
 [tool.poetry]
 name = "cube-http-client"
-version = "0.2.1"
+version = "0.2.2"
 description = "Pythonic HTTP client for Cube.dev REST API"
 authors = ["Michael Harris <mharris@definite.app>"]
 license = "MIT"
 readme = "README.md"
-keywords = ["Cube.js", "Cube", "Analytics"]
+keywords = [
+  "cube.js",
+  "cube js",
+  "cube.dev",
+  "cube bi",
+  "cube",
+  "http client",
+  "business intelligence",
+]
 homepage = "https://github.com/mharrisb1/cube-http-client"
 repository = "https://github.com/mharrisb1/cube-http-client"
 documentation = "https://github.com/mharrisb1/cube-http-client"
