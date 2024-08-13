@@ -15,12 +15,12 @@ def test_load_query():
     cube.v1.load(
         {
             "measures": ["teams.count"],
-            "dimensions": ["teams.team_domain"],
+            "dimensions": ["teams.is_business_domain"],
             "limit": 10,
             "timeDimensions": [
                 {
                     "dimension": "teams.team_created_at",
-                    "dateRange": "last month",
+                    "dateRange": "last 3 month",
                     "granularity": "week",
                 }
             ],
@@ -39,12 +39,12 @@ async def test_async_load_query():
     await cube.v1.load(
         {
             "measures": ["teams.count"],
-            "dimensions": ["teams.team_domain"],
+            "dimensions": ["teams.is_business_domain"],
             "limit": 10,
             "timeDimensions": [
                 {
                     "dimension": "teams.team_created_at",
-                    "dateRange": "last month",
+                    "dateRange": "last 3 month",
                     "granularity": "week",
                 }
             ],
