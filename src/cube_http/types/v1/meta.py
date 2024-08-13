@@ -172,6 +172,9 @@ class V1CubeMeta(BaseModel):
     """A brief description of the cube to help your team understand its purpose and contents. 
     Useful for ensuring that the data is interpreted correctly by users."""
 
+    file_name: Optional[str] = Field(alias="fileName", default=None)
+    """File name"""
+
     sql_table: Optional[str] = Field(alias="sqlTable", default=None)
     """Specifies the table in the database that this cube will query. 
     It is a concise alternative to the `sql` parameter when querying entire tables."""
