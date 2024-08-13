@@ -4,27 +4,20 @@ from typing_extensions import NotRequired
 from pydantic import BaseModel, Field
 
 
-from .meta import (
-    V1CubeMetaDimension,
-    V1CubeMetaMeasure,
-    V1CubeMetaSegment,
-)
-
-
 class V1LoadResultAnnotation(BaseModel):
-    measures: Dict[str, V1CubeMetaMeasure] = Field(
+    measures: Dict[str, Dict[str, Any]] = Field(
         description="Annotations for measures in the result."
     )
 
-    dimensions: Dict[str, V1CubeMetaDimension] = Field(
+    dimensions: Dict[str, Dict[str, Any]] = Field(
         description="Annotations for dimensions in the result."
     )
 
-    segments: Dict[str, V1CubeMetaSegment] = Field(
+    segments: Dict[str, Dict[str, Any]] = Field(
         description="Annotations for segments in the result."
     )
 
-    time_dimensions: Dict[str, V1CubeMetaDimension] = Field(
+    time_dimensions: Dict[str, Dict[str, Any]] = Field(
         alias="timeDimensions",
         description="Annotations for time dimensions in the result.",
     )

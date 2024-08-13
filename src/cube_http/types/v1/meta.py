@@ -59,7 +59,6 @@ V1CubeMetaDimensionFormat = Union[
 
 class V1CubeMetaDimension(BaseModel):
     name: str = Field(
-        default="",
         description="The unique identifier for the dimension. It must be unique among all dimensions, measures, and segments within a cube and follow naming conventions.",
     )
 
@@ -129,7 +128,6 @@ class V1CubeMetaDimension(BaseModel):
 
 class V1CubeMetaMeasure(BaseModel):
     name: str = Field(
-        default="",
         description="The unique identifier for the measure. It must be unique among all measures, dimensions, and segments within a cube and must follow naming conventions.",
     )
 
