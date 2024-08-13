@@ -49,7 +49,7 @@ class V1CubeMetaDimensionLinkFormat(BaseModel):
 
 
 V1CubeMetaDimensionFormat = Union[
-    Literal["imageUrl", "id", "link", "currency", "percent"],
+    Literal["imageUrl", "id", "link", "currency", "percent", "number"],
     V1CubeMetaDimensionLinkFormat,
 ]
 
