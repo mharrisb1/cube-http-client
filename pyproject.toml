@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cube-http-client"
-version = "0.1.7"
+version = "0.2.0"
 description = "Pythonic HTTP client for Cube.dev REST API"
 authors = ["Michael Harris <mharris@definite.app>"]
 license = "MIT"
@@ -22,7 +22,6 @@ mypy = "^1.11.0"
 pytest = "^8.3.2"
 pytest-asyncio = "^0.23.8"
 tox = "^4.16.0"
-datamodel-code-generator = "^0.25.8"
 
 [build-system]
 requires = ["poetry-core"]
