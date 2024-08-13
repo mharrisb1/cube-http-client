@@ -1,10 +1,10 @@
-from typing import Any, Type, TypeVar
+from typing import Any, Type
 
 from pydantic import BaseModel
 
-__all__ = ["model_dict", "model_parse"]
+from ..types._generics import M
 
-M = TypeVar("M", bound=BaseModel)
+__all__ = ["model_dict", "model_parse"]
 
 
 def model_dict(m: BaseModel, **kwargs: Any) -> dict[str, Any]:
