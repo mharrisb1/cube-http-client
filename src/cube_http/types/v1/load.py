@@ -252,10 +252,24 @@ class V1LoadRequest(BaseModel):
 #############
 
 
+class V1LoadRequestQueryFilterBaseDict(TypedDict):
+    member: NotRequired[str]
+    """Dimension or measure to be used in the filter, e.g., `stories.isDraft`. 
+    Differentiates between filtering dimensions and filtering measures."""
+
+    operator: NotRequired[V1LoadRequestQueryFilterOperator]
+    """Operator to apply in the filter. 
+    Some operators are exclusive to measures, while others depend on the dimension type."""
+
+    values: NotRequired[List[str]]
+    """List of values for the filter, provided as strings. 
+    For dates, use the `YYYY-MM-DD` format."""
+
+
 V1LoadRequestQueryFilterLogicalAndDict = TypedDict(
     "V1LoadRequestQueryFilterLogicalAndDict",
     {
-        "and": NotRequired[List[Dict[str, Any]]],
+        "and": NotRequired[List["V1LoadRequestQueryFilterItemDict"]],
     },
 )
 
@@ -263,22 +277,9 @@ V1LoadRequestQueryFilterLogicalAndDict = TypedDict(
 V1LoadRequestQueryFilterLogicalOrDict = TypedDict(
     "V1LoadRequestQueryFilterLogicalOrDict",
     {
-        "or": NotRequired[List[Dict[str, Any]]],
+        "or": NotRequired[List["V1LoadRequestQueryFilterItemDict"]],
     },
 )
-
-
-class V1LoadRequestQueryFilterBaseDict(TypedDict):
-    member: NotRequired[str]
-    operator: NotRequired[str]
-    values: NotRequired[List[str]]
-
-
-class V1LoadRequestQueryTimeDimensionDict(TypedDict):
-    dimension: str
-    granularity: NotRequired[str]
-    dateRange: NotRequired[Union[str, List[str]]]
-
 
 V1LoadRequestQueryFilterItemDict = Union[
     V1LoadRequestQueryFilterBaseDict,
@@ -287,13 +288,66 @@ V1LoadRequestQueryFilterItemDict = Union[
 ]
 
 
+class V1LoadRequestQueryTimeDimensionDict(TypedDict):
+    dimension: str
+    """The name of the time dimension."""
+
+    granularity: NotRequired[V1LoadRequestQueryTimeDimensionGranularity]
+    """Granularity level for the time dimension. 
+    Setting this to null will filter by the specified time dimension without grouping."""
+
+    dateRange: NotRequired[Union[str, Tuple[str, str]]]
+    """Date range for filtering, either as a string in `YYYY-MM-DD` format 
+    or as a tuple of strings representing start and end dates."""
+
+
+V1LoadRequestQueryOrderDict = Union[
+    dict[str, V1LoadRequestQueryOrderDirection],
+    List[str],
+]
+
+
 class V1LoadRequestQueryDict(TypedDict):
     measures: NotRequired[List[str]]
+    """List of measures to be queried."""
+
     dimensions: NotRequired[List[str]]
+    """List of dimensions to be queried."""
+
     segments: NotRequired[List[str]]
+    """List of segments to be used in the query. 
+    A segment is a named filter defined in the data model."""
+
     timeDimensions: NotRequired[List[V1LoadRequestQueryTimeDimensionDict]]
-    order: NotRequired[List[List[str]]]
+    """List of time dimensions to be used in the query."""
+
+    order: NotRequired[V1LoadRequestQueryOrderDict]
+    """Ordering criteria for the query, specified as a dictionary of measures 
+    or dimensions with `asc` or `desc` values."""
+
     limit: NotRequired[int]
+    """Maximum number of rows to return in the query result."""
+
     offset: NotRequired[int]
+    """Number of initial rows to skip in the query result. Default is 0."""
+
     filters: NotRequired[List[V1LoadRequestQueryFilterItemDict]]
+    """List of filters to apply to the query."""
+
+    timezone: NotRequired[str]
+    """Time zone to be used for the query, specified in the TZ Database Name format 
+    (e.g., `America/Los_Angeles`)."""
+
+    renewQuery: NotRequired[bool]
+    """Whether to renew all refresh keys for queries and query results in the foreground. 
+    Default is false."""
+
+    total: NotRequired[bool]
+    """If true, Cube will run a total query and return the total number of rows, 
+    ignoring any row limit or offset. Default is false."""
+
     ungrouped: NotRequired[bool]
+    """Indicates if the query should be ungrouped."""
+
+    queryType: NotRequired[str]
+    """Type of the query, for internal use."""
