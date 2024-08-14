@@ -185,14 +185,6 @@ class V1LoadRequestQueryTimeDimension(BaseModel):
     )
 
 
-V1LoadRequestQueryOrderDirection = Literal["asc", "desc"]
-
-V1LoadRequestQueryOrder = Union[
-    Dict[str, V1LoadRequestQueryOrderDirection],
-    List[str],
-]
-
-
 class V1LoadRequestQuery(BaseModel):
     measures: Optional[List[str]] = Field(
         default=None, description="List of measures to be queried."
@@ -213,7 +205,7 @@ class V1LoadRequestQuery(BaseModel):
         description="List of time dimensions to be used in the query.",
     )
 
-    order: Optional[V1LoadRequestQueryOrder] = Field(
+    order: Optional[List[str]] = Field(
         default=None,
         description="Ordering criteria for the query, specified as a dictionary of measures or dimensions with `asc` or `desc` values.",
     )
@@ -309,12 +301,6 @@ class V1LoadRequestQueryTimeDimensionDict(TypedDict):
     `last quarter`, `last 360 days`, `next month`, `last 6 month`, `from 7 days ago to now`, `from now to 2 weeks from now`."""
 
 
-V1LoadRequestQueryOrderDict = Union[
-    dict[str, V1LoadRequestQueryOrderDirection],
-    List[str],
-]
-
-
 class V1LoadRequestQueryDict(TypedDict):
     measures: NotRequired[List[str]]
     """List of measures to be queried."""
@@ -329,7 +315,7 @@ class V1LoadRequestQueryDict(TypedDict):
     timeDimensions: NotRequired[List[V1LoadRequestQueryTimeDimensionDict]]
     """List of time dimensions to be used in the query."""
 
-    order: NotRequired[V1LoadRequestQueryOrderDict]
+    order: NotRequired[List[str]]
     """Ordering criteria for the query, specified as a dictionary of measures 
     or dimensions with `asc` or `desc` values."""
 
