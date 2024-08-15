@@ -24,7 +24,7 @@ class V1LoadResultAnnotation(BaseModel):
 
 
 class V1LoadResult(BaseModel):
-    query: Optional["V1LoadRequestQuery"] = Field(
+    query: Optional[Dict[str, Any]] = Field(
         default=None, description="The original query object."
     )
 
@@ -95,7 +95,7 @@ class V1LoadResult(BaseModel):
 
 
 class V1LoadResponse(BaseModel):
-    pivot_query: Optional["V1LoadRequestQuery"] = Field(
+    pivot_query: Optional[Dict[str, Any]] = Field(
         alias="pivotQuery",
         default=None,
         description="The pivot query associated with the load response.",
@@ -205,7 +205,7 @@ class V1LoadRequestQuery(BaseModel):
         description="List of time dimensions to be used in the query.",
     )
 
-    order: Optional[List[str]] = Field(
+    order: Optional[List[List[str]]] = Field(
         default=None,
         description="Ordering criteria for the query, specified as a dictionary of measures or dimensions with `asc` or `desc` values.",
     )
@@ -315,7 +315,7 @@ class V1LoadRequestQueryDict(TypedDict):
     timeDimensions: NotRequired[List[V1LoadRequestQueryTimeDimensionDict]]
     """List of time dimensions to be used in the query."""
 
-    order: NotRequired[List[str]]
+    order: NotRequired[List[List[str]]]
     """Ordering criteria for the query, specified as a dictionary of measures 
     or dimensions with `asc` or `desc` values."""
 
