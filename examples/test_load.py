@@ -24,6 +24,7 @@ def test_load_query():
                     "granularity": "week",
                 }
             ],
+            "order": [["teams.team_id", "asc"]],
         },
     )
 
@@ -48,5 +49,6 @@ async def test_async_load_query():
                     "granularity": "week",
                 }
             ],
+            "order": [["teams.team_id", "asc"]],
         },
     )
