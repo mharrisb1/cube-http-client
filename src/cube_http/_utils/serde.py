@@ -2,7 +2,7 @@ from typing import Any, Type
 
 from pydantic import BaseModel
 
-from ..types._generics import M
+from ..types._generics import TModel
 
 __all__ = ["model_dict", "model_parse"]
 
@@ -14,7 +14,7 @@ def model_dict(m: BaseModel, **kwargs: Any) -> dict[str, Any]:
         return getattr(m, "dict")(**kwargs)
 
 
-def model_parse(m: Type[M], d: object, **kwargs: Any) -> M:
+def model_parse(m: Type[TModel], d: object, **kwargs: Any) -> TModel:
     if hasattr(m, "model_validate"):
         return getattr(m, "model_validate")(d, **kwargs)
     else:

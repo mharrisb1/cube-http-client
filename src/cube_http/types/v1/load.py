@@ -3,6 +3,9 @@ from typing_extensions import NotRequired
 
 from pydantic import BaseModel, Field
 
+from .._base import RequestModel, ResponseModel
+from ..._utils.serde import model_parse
+
 
 class V1LoadResultAnnotation(BaseModel):
     measures: Dict[str, Dict[str, Any]] = Field(
@@ -94,7 +97,7 @@ class V1LoadResult(BaseModel):
     )
 
 
-class V1LoadResponse(BaseModel):
+class V1LoadResponse(ResponseModel):
     pivot_query: Optional[Dict[str, Any]] = Field(
         alias="pivotQuery",
         default=None,
@@ -251,16 +254,23 @@ class V1LoadRequestQuery(BaseModel):
     )
 
 
-class V1LoadRequest(BaseModel):
+class V1LoadRequest(RequestModel):
     query_type: Optional[Literal["multi"]] = Field(
         alias="queryType",
         default=None,
         description="Specifies the type of the query.",
     )
 
-    query: Optional[Union[V1LoadRequestQuery, List[V1LoadRequestQuery]]] = Field(
+    query: Optional[V1LoadRequestQuery] = Field(
         default=None, description="The query or a list of queries to execute."
     )
+
+    @classmethod
+    def build(cls, query: "V1LoadRequestQueryDict") -> "V1LoadRequest":
+        return cls(
+            queryType="multi",
+            query=model_parse(V1LoadRequestQuery, query),
+        )
 
 
 #############

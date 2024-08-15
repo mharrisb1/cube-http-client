@@ -1,6 +1,8 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 from pydantic import BaseModel, Field
 
+from .._base import ResponseModel
+
 
 class V1CubeMetaJoin(BaseModel):
     name: str = Field(
@@ -313,7 +315,7 @@ class V1CubeMeta(BaseModel):
     )
 
 
-class V1MetaResponse(BaseModel):
+class V1MetaResponse(ResponseModel):
     cubes: Optional[List[V1CubeMeta]] = Field(
         default=None, description="List of cube metadata in the response."
     )
