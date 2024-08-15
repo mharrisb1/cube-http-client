@@ -1,6 +1,6 @@
 # cube-http-client
 
-Pythonic HTTP client for [Cube.dev](https://cube.dev) REST API.
+Pythonic HTTP client for [Cube.dev](https://cube.dev) REST API (sync + async support)
 
 ## Installation
 
@@ -42,3 +42,37 @@ compiled_sql = cube.v1.sql({
 | `/v1/pre-aggregations/jobs` | Trigger pre-aggregation build jobs or retrieve statuses of such jobs.                                                                                                     | ❌         |
 | `/readyz`                   | Returns the ready state of the deployment.                                                                                                                                | ❌         |
 | `/livez`                    | Returns the liveness state of the deployment. This is confirmed by testing any existing connections to dataSource. If no connections exist, it will report as successful. | ❌         |
+
+## Usage
+
+### Synchronous
+
+```python
+import cube_http
+
+cube = cube_http.Client(...)
+```
+
+### Asynchronous
+
+```python
+import cube_http
+
+cube = cube_http.AsyncClient(...)
+```
+
+### Error handling
+
+Error classes are available for each endpoint. For example, handling an API error when calling `/v1/meta` endpoint:
+
+```python
+import cube_http
+from cube_http.exc.v1 import V1MetaError
+
+cube = cube_http.Client(...)
+
+try:
+    meta = cube.v1.meta()
+except V1MetaError as e:
+    print(e)
+```
