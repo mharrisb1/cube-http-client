@@ -25,6 +25,22 @@ def test_load_query():
                 }
             ],
             "order": [["teams.team_id", "asc"]],
+            "filters": [
+                {
+                    "or": [
+                        {
+                            "member": "teams.team_domain",
+                            "operator": "startsWith",
+                            "values": ["a"],
+                        },
+                        {
+                            "member": "teams.team_domain",
+                            "operator": "startsWith",
+                            "values": ["b"],
+                        },
+                    ]
+                }
+            ],
         },
     )
 

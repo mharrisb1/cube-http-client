@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 
 from .._base import RequestModel, ResponseModel
 from ..._utils.serde import model_parse
+from ..._utils.build import model_build_recursive
 
 
 class V1LoadResultAnnotation(BaseModel):
@@ -144,22 +145,42 @@ V1LoadRequestQueryFilterOperator = Literal[
 ]
 
 
-class V1LoadRequestQueryFilterItem(BaseModel):
-    member: Optional[str] = Field(
-        default=None,
-        description="Dimension or measure to be used in the filter, e.g., `stories.isDraft`. Differentiates between filtering dimensions and filtering measures.",
-    )
+class V1LoadRequestQueryFilterBase(BaseModel):
+    member: Optional[str] = None
+    """Dimension or measure to be used in the filter, e.g., `stories.isDraft`. 
+    Differentiates between filtering dimensions and filtering measures."""
 
-    operator: Optional[V1LoadRequestQueryFilterOperator] = Field(
-        default=None,
-        description="Operator to apply in the filter. Some operators are exclusive to measures, while others depend on the dimension type.",
-    )
+    operator: Optional[V1LoadRequestQueryFilterOperator] = None
+    """Operator to apply in the filter. 
+    Some operators are exclusive to measures, while others depend on the dimension type."""
 
-    values: Optional[List[str]] = Field(
-        default=None,
-        description="List of values for the filter, provided as strings. For dates, use the `YYYY-MM-DD` format.",
-    )
+    values: Optional[List[str]] = None
+    """List of values for the filter, provided as strings. 
+    For dates, use the `YYYY-MM-DD` format."""
 
+
+class V1LoadRequestQueryFilterLogicalAnd(BaseModel):
+    and_: Optional[List["V1LoadRequestQueryFilterItem"]] = Field(
+        alias="and", default=None
+    )
+    """A list of filters or other logical operators to be combined using AND logic."""
+
+
+class V1LoadRequestQueryFilterLogicalOr(BaseModel):
+    or_: Optional[List["V1LoadRequestQueryFilterItem"]] = Field(
+        alias="or", default=None
+    )
+    """A list of filters or other logical operators to be combined using OR logic."""
+
+
+V1LoadRequestQueryFilterItem = Union[
+    V1LoadRequestQueryFilterBase,
+    V1LoadRequestQueryFilterLogicalOr,
+    V1LoadRequestQueryFilterLogicalAnd,
+]
+
+model_build_recursive(V1LoadRequestQueryFilterLogicalAnd)
+model_build_recursive(V1LoadRequestQueryFilterLogicalOr)
 
 V1LoadRequestQueryTimeDimensionGranularity = Literal[
     "second",
@@ -278,7 +299,7 @@ class V1LoadRequest(RequestModel):
 #############
 
 
-class V1LoadRequestQueryFilterItemDict(TypedDict):
+class V1LoadRequestQueryFilterBaseDict(TypedDict):
     member: NotRequired[str]
     """Dimension or measure to be used in the filter, e.g., `stories.isDraft`. 
     Differentiates between filtering dimensions and filtering measures."""
@@ -290,6 +311,28 @@ class V1LoadRequestQueryFilterItemDict(TypedDict):
     values: NotRequired[List[str]]
     """List of values for the filter, provided as strings. 
     For dates, use the `YYYY-MM-DD` format."""
+
+
+V1LoadRequestQueryFilterLogicalAndDict = TypedDict(
+    "V1LoadRequestQueryFilterLogicalAndDict",
+    {
+        "and": NotRequired[List["V1LoadRequestQueryFilterItemDict"]],
+    },
+)
+
+
+V1LoadRequestQueryFilterLogicalOrDict = TypedDict(
+    "V1LoadRequestQueryFilterLogicalOrDict",
+    {
+        "or": NotRequired[List["V1LoadRequestQueryFilterItemDict"]],
+    },
+)
+
+V1LoadRequestQueryFilterItemDict = Union[
+    V1LoadRequestQueryFilterBaseDict,
+    V1LoadRequestQueryFilterLogicalOrDict,
+    V1LoadRequestQueryFilterLogicalAndDict,
+]
 
 
 class V1LoadRequestQueryTimeDimensionDict(TypedDict):
