@@ -6,3 +6,7 @@ __pycache__/
 dist/
 
 *.lock
+
+.cubestore/
+.env
+package.json
