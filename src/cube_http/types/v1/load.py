@@ -253,27 +253,6 @@ class V1LoadRequestQuery(BaseModel):
         description="Time zone to be used for the query, specified in the TZ Database Name format (e.g., `America/Los_Angeles`).",
     )
 
-    renew_query: Optional[bool] = Field(
-        alias="renewQuery",
-        default=None,
-        description="Whether to renew all refresh keys for queries and query results in the foreground. Default is false.",
-    )
-
-    total: Optional[bool] = Field(
-        default=None,
-        description="If true, Cube will run a total query and return the total number of rows, ignoring any row limit or offset. Default is false.",
-    )
-
-    ungrouped: Optional[bool] = Field(
-        default=None, description="Indicates if the query should be ungrouped."
-    )
-
-    query_type: Optional[str] = Field(
-        alias="queryType",
-        default=None,
-        description="Type of the query, for internal use.",
-    )
-
 
 class V1LoadRequest(RequestModel):
     query_type: Optional[Literal["multi"]] = Field(
@@ -384,17 +363,3 @@ class V1LoadRequestQueryDict(TypedDict):
     timezone: NotRequired[str]
     """Time zone to be used for the query, specified in the TZ Database Name format 
     (e.g., `America/Los_Angeles`)."""
-
-    renewQuery: NotRequired[bool]
-    """Whether to renew all refresh keys for queries and query results in the foreground. 
-    Default is false."""
-
-    total: NotRequired[bool]
-    """If true, Cube will run a total query and return the total number of rows, 
-    ignoring any row limit or offset. Default is false."""
-
-    ungrouped: NotRequired[bool]
-    """Indicates if the query should be ungrouped."""
-
-    queryType: NotRequired[str]
-    """Type of the query, for internal use."""
