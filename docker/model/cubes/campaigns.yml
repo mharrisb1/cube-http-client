@@ -1,0 +1,68 @@
+cubes:
+  - name: campaigns
+    sql_table: public.campaigns
+    data_source: default
+
+    joins:
+      - name: leads
+        sql: "{CUBE}.id = {leads}.campaign_id"
+        relationship: one_to_many
+
+      - name: opportunities
+        sql: "{CUBE}.id = {opportunities}.campaign_id"
+        relationship: one_to_many
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: name
+        sql: name
+        type: string
+
+      - name: status
+        sql: status
+        type: string
+
+      - name: start_date
+        sql: start_date
+        type: time
+
+      - name: end_date
+        sql: end_date
+        type: time
+
+      - name: budgeted_cost
+        sql: budgeted_cost
+        type: number
+
+      - name: actual_cost
+        sql: actual_cost
+        type: number
+
+      - name: expected_revenue
+        sql: expected_revenue
+        type: number
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of campaigns."
+
+      # Measure: Total cost
+      - name: total_cost
+        type: sum
+        sql: actual_cost
+        description: "Sum of the actual costs for all campaigns."
+
+      # Measure: Total revenue
+      - name: total_revenue
+        type: sum
+        sql: expected_revenue
+        description: "Sum of the expected revenue for all campaigns."

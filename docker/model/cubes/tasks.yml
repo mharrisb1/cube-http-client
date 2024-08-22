@@ -1,0 +1,110 @@
+cubes:
+  - name: tasks
+    sql_table: public.tasks
+    data_source: default
+
+    joins:
+      - name: accounts
+        sql: "{CUBE}.related_to_id = {accounts}.id AND {CUBE}.related_to_type = 'account'"
+        relationship: many_to_one
+
+      - name: opportunities
+        sql: "{CUBE}.related_to_id = {opportunities}.id AND {CUBE}.related_to_type = 'opportunity'"
+        relationship: many_to_one
+
+      - name: leads
+        sql: "{CUBE}.related_to_id = {leads}.id AND {CUBE}.related_to_type = 'lead'"
+        relationship: many_to_one
+
+      - name: cases
+        sql: "{CUBE}.related_to_id = {cases}.id AND {CUBE}.related_to_type = 'case'"
+        relationship: many_to_one
+
+      - name: users
+        sql: "{CUBE}.related_to_id = {users}.id AND {CUBE}.related_to_type = 'user'"
+        relationship: many_to_one
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: subject
+        sql: subject
+        type: string
+
+      - name: status
+        sql: status
+        type: string
+
+      - name: priority
+        sql: priority
+        type: string
+
+      - name: due_date
+        sql: due_date
+        type: time
+
+      - name: completed_date
+        sql: completed_date
+        type: time
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of tasks."
+
+      # Measure: Total tasks by status
+      - name: completed_tasks
+        type: count
+        sql: id
+        filters:
+          - sql: "${CUBE}.status = 'Completed'"
+        description: "Counts the total number of completed tasks."
+
+      - name: pending_tasks
+        type: count
+        sql: id
+        filters:
+          - sql: "${CUBE}.status = 'Pending'"
+        description: "Counts the total number of pending tasks."
+
+      - name: in_progress_tasks
+        type: count
+        sql: id
+        filters:
+          - sql: "${CUBE}.status = 'In Progress'"
+        description: "Counts the total number of in-progress tasks."
+
+      # Measure: Average task completion time
+      - name: avg_completion_time
+        type: avg
+        sql: "EXTRACT(EPOCH FROM (completed_date - created_at)) / 3600"
+        description: "Average task completion time in hours."
+
+      # Measure: Tasks by priority
+      - name: high_priority_tasks
+        type: count
+        sql: id
+        filters:
+          - sql: "${CUBE}.priority = 'High'"
+        description: "Counts the total number of high-priority tasks."
+
+      - name: medium_priority_tasks
+        type: count
+        sql: id
+        filters:
+          - sql: "${CUBE}.priority = 'Medium'"
+        description: "Counts the total number of medium-priority tasks."
+
+      - name: low_priority_tasks
+        type: count
+        sql: id
+        filters:
+          - sql: "${CUBE}.priority = 'Low'"
+        description: "Counts the total number of low-priority tasks."

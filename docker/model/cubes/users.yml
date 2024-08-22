@@ -1,0 +1,48 @@
+cubes:
+  - name: users
+    sql_table: public.users
+    data_source: default
+
+    joins:
+      - name: accounts
+        sql: "{CUBE}.id = {accounts}.id"
+        relationship: one_to_many
+
+      - name: opportunities
+        sql: "{CUBE}.id = {opportunities}.id"
+        relationship: one_to_many
+
+      - name: tasks
+        sql: "{CUBE}.id = {tasks}.related_to_id AND {tasks}.related_to_type = 'user'"
+        relationship: one_to_many
+
+      - name: cases
+        sql: "{CUBE}.id = {cases}.id"
+        relationship: one_to_many
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: username
+        sql: username
+        type: string
+
+      - name: email
+        sql: email
+        type: string
+
+      - name: role
+        sql: role
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of users."

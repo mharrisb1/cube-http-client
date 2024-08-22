@@ -1,0 +1,57 @@
+cubes:
+  - name: contacts
+    sql_table: public.contacts
+    data_source: default
+
+    joins:
+      - name: accounts
+        sql: "{CUBE}.account_id = {accounts}.id"
+        relationship: many_to_one
+
+      - name: opportunities
+        sql: "{CUBE}.account_id = {opportunities}.account_id"
+        relationship: one_to_many
+
+      - name: tasks
+        sql: "{CUBE}.id = {tasks}.related_to_id AND {tasks}.related_to_type = 'contact'"
+        relationship: one_to_many
+
+      - name: cases
+        sql: "{CUBE}.id = {cases}.contact_id"
+        relationship: one_to_many
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: email
+        sql: email
+        type: string
+
+      - name: last_name
+        sql: last_name
+        type: string
+
+      - name: phone
+        sql: phone
+        type: string
+
+      - name: first_name
+        sql: first_name
+        type: string
+
+      - name: full_name
+        sql: CONCAT({first_name}, ' ', {last_name})
+        type: string
+        description: "Concatenated first and last name for ease of use in reports."
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of contacts."

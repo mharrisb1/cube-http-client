@@ -1,0 +1,29 @@
+cubes:
+  - name: price_books
+    sql_table: public.price_books
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: name
+        sql: name
+        type: string
+
+      - name: description
+        sql: description
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of price books."

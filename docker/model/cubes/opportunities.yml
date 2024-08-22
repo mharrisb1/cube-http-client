@@ -1,0 +1,62 @@
+cubes:
+  - name: opportunities
+    sql_table: public.opportunities
+    data_source: default
+
+    joins:
+      - name: accounts
+        sql: "{CUBE}.account_id = {accounts}.id"
+        relationship: many_to_one
+
+      - name: contacts
+        sql: "{CUBE}.account_id = {contacts}.account_id"
+        relationship: one_to_many
+
+      - name: tasks
+        sql: "{CUBE}.id = {tasks}.related_to_id AND {tasks}.related_to_type = 'opportunity'"
+        relationship: one_to_many
+
+      - name: opportunity_line_items
+        sql: "{CUBE}.id = {opportunity_line_items}.opportunity_id"
+        relationship: one_to_many
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: stage
+        sql: stage
+        type: string
+
+      - name: name
+        sql: name
+        type: string
+
+      - name: amount
+        sql: amount
+        type: number
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+      - name: close_date
+        sql: close_date
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of opportunities."
+
+      - name: total_amount
+        type: sum
+        sql: amount
+        description: "Sum of the amounts for all opportunities."
+
+      - name: avg_amount
+        type: avg
+        sql: amount
+        description: "Average amount of opportunities."

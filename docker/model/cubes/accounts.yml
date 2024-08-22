@@ -1,0 +1,50 @@
+cubes:
+  - name: accounts
+    sql_table: public.accounts
+    data_source: default
+
+    joins:
+      - name: contacts
+        sql: "{CUBE}.id = {contacts}.account_id"
+        relationship: one_to_many
+
+      - name: opportunities
+        sql: "{CUBE}.id = {opportunities}.account_id"
+        relationship: one_to_many
+
+      - name: cases
+        sql: "{CUBE}.id = {cases}.account_id"
+        relationship: one_to_many
+
+      - name: tasks
+        sql: "{CUBE}.id = {tasks}.related_to_id AND {tasks}.related_to_type = 'account'"
+        relationship: one_to_many
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: industry
+        sql: industry
+        type: string
+
+      - name: name
+        sql: name
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of accounts."
+
+      # Example measure: distinct industries
+      - name: distinct_industries
+        type: countDistinct
+        sql: industry
+        description: "Counts the number of distinct industries."

@@ -1,0 +1,84 @@
+cubes:
+  - name: cases
+    sql_table: public.cases
+    data_source: default
+
+    joins:
+      - name: accounts
+        sql: "{CUBE}.account_id = {accounts}.id"
+        relationship: many_to_one
+
+      - name: contacts
+        sql: "{CUBE}.contact_id = {contacts}.id"
+        relationship: many_to_one
+
+      - name: users
+        sql: "{CUBE}.id = {users}.id"
+        relationship: many_to_one
+
+      - name: tasks
+        sql: "{CUBE}.id = {tasks}.related_to_id AND {tasks}.related_to_type = 'case'"
+        relationship: one_to_many
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: subject
+        sql: subject
+        type: string
+
+      - name: status
+        sql: status
+        type: string
+
+      - name: priority
+        sql: priority
+        type: string
+
+      - name: description
+        sql: description
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+      - name: closed_at
+        sql: closed_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of cases."
+
+      # Measure: Average case resolution time
+      - name: avg_resolution_time
+        type: avg
+        sql: "EXTRACT(EPOCH FROM (closed_at - created_at)) / 3600"
+        description: "Average case resolution time in hours."
+
+      # Measure: Total number of cases by priority
+      - name: high_priority_cases
+        type: count
+        sql: id
+        filters:
+          - sql: "${CUBE}.priority = 'High'"
+        description: "Counts the total number of high-priority cases."
+
+      - name: medium_priority_cases
+        type: count
+        sql: id
+        filters:
+          - sql: "${CUBE}.priority = 'Medium'"
+        description: "Counts the total number of medium-priority cases."
+
+      - name: low_priority_cases
+        type: count
+        sql: id
+        filters:
+          - sql: "${CUBE}.priority = 'Low'"
+        description: "Counts the total number of low-priority cases."

@@ -1,0 +1,42 @@
+cubes:
+  - name: products
+    sql_table: public.products
+    data_source: default
+
+    joins:
+      - name: opportunity_line_items
+        sql: "{CUBE}.id = {opportunity_line_items}.product_id"
+        relationship: one_to_many
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: name
+        sql: name
+        type: string
+
+      - name: description
+        sql: description
+        type: string
+
+      - name: price
+        sql: price
+        type: number
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of products."
+
+      # Measure: Average price of product in line items
+      - name: avg_price
+        type: avg
+        sql: price
+        description: "Average price of the product as used in opportunity line items."

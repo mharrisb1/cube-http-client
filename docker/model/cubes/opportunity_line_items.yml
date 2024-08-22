@@ -1,0 +1,64 @@
+cubes:
+  - name: opportunity_line_items
+    sql_table: public.opportunity_line_items
+    data_source: default
+
+    joins:
+      - name: opportunities
+        sql: "{CUBE}.opportunity_id = {opportunities}.id"
+        relationship: many_to_one
+
+      - name: products
+        sql: "{CUBE}.product_id = {products}.id"
+        relationship: many_to_one
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: quantity
+        sql: quantity
+        type: number
+
+      - name: price
+        sql: price
+        type: number
+
+      - name: total_price
+        sql: total_price
+        type: number
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        description: "Counts the total number of opportunity line items."
+
+      # Measure: Total quantity of products sold
+      - name: total_quantity
+        type: sum
+        sql: quantity
+        description: "Total quantity of products sold through opportunity line items."
+
+      # Measure: Total revenue from opportunity line items
+      - name: total_revenue
+        type: sum
+        sql: total_price
+        description: "Total revenue generated from opportunity line items."
+
+      # Measure: Average price per product
+      - name: avg_price_per_product
+        type: avg
+        sql: price
+        description: "Average price of products in opportunity line items."
+
+      # Measure: Average total price per line item
+      - name: avg_total_price_per_line_item
+        type: avg
+        sql: total_price
+        description: "Average total price of opportunity line items."

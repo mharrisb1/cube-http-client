@@ -1,0 +1,42 @@
+services:
+  cube:
+    image: cubejs/cube:latest
+    volumes:
+      - .:/cube/conf
+    environment:
+      CUBEJS_DEV_MODE: true
+      CUBEJS_DB_HOST: host.docker.internal
+      CUBEJS_DB_PORT: 5432
+      CUBEJS_DB_NAME: postgres
+      CUBEJS_DB_USER: postgres
+      CUBEJS_DB_PASS: postgres
+      CUBEJS_DB_TYPE: postgres
+      CUBEJS_API_SECRET: 9f5e76b519a44b060daa33e78c5de170
+      CUBEJS_EXTERNAL_DEFAULT: true
+      CUBEJS_SCHEDULED_REFRESH_DEFAULT: true
+      CUBEJS_SCHEMA_PATH: model
+    ports:
+      - 4000:4000
+    networks:
+      - my-network
+
+  psql:
+    image: postgres
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - my-network
+
+networks:
+  my-network:
+
+volumes:
+  postgres-data:
