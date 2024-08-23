@@ -5,7 +5,6 @@ from pydantic import BaseModel, Field
 
 from .._base import RequestModel, ResponseModel
 from ..._utils.serde import model_parse
-from ..._utils.build import model_build_recursive
 
 
 class V1LoadResultAnnotation(BaseModel):
@@ -145,7 +144,7 @@ V1LoadRequestQueryFilterOperator = Literal[
 ]
 
 
-class V1LoadRequestQueryFilterBase(BaseModel):
+class V1LoadRequestQueryFilterItem(BaseModel):
     member: Optional[str] = None
     """Dimension or measure to be used in the filter, e.g., `stories.isDraft`. 
     Differentiates between filtering dimensions and filtering measures."""
@@ -158,29 +157,16 @@ class V1LoadRequestQueryFilterBase(BaseModel):
     """List of values for the filter, provided as strings. 
     For dates, use the `YYYY-MM-DD` format."""
 
-
-class V1LoadRequestQueryFilterLogicalAnd(BaseModel):
     and_: Optional[List["V1LoadRequestQueryFilterItem"]] = Field(
         alias="and", default=None
     )
     """A list of filters or other logical operators to be combined using AND logic."""
 
-
-class V1LoadRequestQueryFilterLogicalOr(BaseModel):
     or_: Optional[List["V1LoadRequestQueryFilterItem"]] = Field(
         alias="or", default=None
     )
     """A list of filters or other logical operators to be combined using OR logic."""
 
-
-V1LoadRequestQueryFilterItem = Union[
-    V1LoadRequestQueryFilterBase,
-    V1LoadRequestQueryFilterLogicalOr,
-    V1LoadRequestQueryFilterLogicalAnd,
-]
-
-model_build_recursive(V1LoadRequestQueryFilterLogicalAnd)
-model_build_recursive(V1LoadRequestQueryFilterLogicalOr)
 
 V1LoadRequestQueryTimeDimensionGranularity = Literal[
     "second",
