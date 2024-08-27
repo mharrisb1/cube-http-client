@@ -167,6 +167,8 @@ class V1LoadRequestQueryFilterItem(BaseModel):
     )
     """A list of filters or other logical operators to be combined using OR logic."""
 
+    # TODO(mh): add validator to not allow user to set base filter fields and logical filters
+
 
 V1LoadRequestQueryTimeDimensionGranularity = Literal[
     "second",
@@ -237,6 +239,12 @@ class V1LoadRequestQuery(BaseModel):
     timezone: Optional[str] = Field(
         default=None,
         description="Time zone to be used for the query, specified in the TZ Database Name format (e.g., `America/Los_Angeles`).",
+    )
+
+    renew_query: Optional[bool] = Field(
+        alias="renewQuery",
+        default=None,
+        description="Whether to renew all refresh keys for queries and query results in the foreground. Default is false.",
     )
 
 
