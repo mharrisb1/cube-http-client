@@ -244,7 +244,12 @@ class V1LoadRequestQuery(BaseModel):
     renew_query: Optional[bool] = Field(
         alias="renewQuery",
         default=None,
-        description="Whether to renew all refresh keys for queries and query results in the foreground. Default is false.",
+        description="Cube will renew all refreshKey for queries and query results in the foreground. However, if the refreshKey (or refreshKey.every) doesn't indicate that there's a need for an update this setting has no effect. The default value is false",
+    )
+
+    ungrouped: Optional[bool] = Field(
+        default=None,
+        description="If set to true, Cube will run an ungrouped query.",
     )
 
 
@@ -357,3 +362,9 @@ class V1LoadRequestQueryDict(TypedDict):
     timezone: NotRequired[str]
     """Time zone to be used for the query, specified in the TZ Database Name format 
     (e.g., `America/Los_Angeles`)."""
+
+    renewQuery: NotRequired[bool]
+    """Cube will renew all refreshKey for queries and query results in the foreground. However, if the refreshKey (or refreshKey.every) doesn't indicate that there's a need for an update this setting has no effect. The default value is false"""
+
+    ungrouped: NotRequired[bool]
+    """If set to true, Cube will run an ungrouped query."""
