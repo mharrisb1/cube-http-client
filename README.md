@@ -4,7 +4,13 @@ Pythonic HTTP client for [Cube.dev](https://cube.dev) REST API (sync + async sup
 
 ## Installation
 
-```sh
+[![PyPI version](https://badge.fury.io/py/cube-http-client.svg)](https://badge.fury.io/py/cube-http-client)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/cube-http-client.svg)](https://pypi.org/project/cube-http-client)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/cube-http-client)](https://pypi.org/project/cube-http-client/)
+
+Available on [PyPI](https://pypi.org/project/cube-http-client)
+
+```bash
 pip install cube-http-client
 ```
 
