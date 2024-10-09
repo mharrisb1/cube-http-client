@@ -23,8 +23,9 @@ class V1CubeMetaJoin(BaseModel):
         description="The type of relationship between the cubes. Valid relationships are `one_to_one`, `one_to_many`, and `many_to_one`."
     )
 
-    sql: str = Field(
-        description="The SQL ON clause that specifies the join condition between the cubes. It is important to accurately define the matching columns to ensure correct join behavior."
+    sql: Optional[str] = Field(
+        default=None,
+        description="The SQL ON clause that specifies the join condition between the cubes. It is important to accurately define the matching columns to ensure correct join behavior.",
     )
 
 
@@ -34,8 +35,8 @@ class V1CubeMetaSegment(BaseModel):
         description="The unique identifier for the segment. It must be unique among all segments, dimensions, and measures within a cube and follow naming conventions.",
     )
 
-    sql: str = Field(
-        default="",
+    sql: Optional[str] = Field(
+        default=None,
         description="A required parameter that defines the SQL expression used to filter the data for this segment. The SQL should be valid within a WHERE clause and can implement complex filtering logic.",
     )
 
@@ -80,8 +81,8 @@ class V1CubeMetaDimension(BaseModel):
         description="A description providing more context about what the dimension represents. This is useful for ensuring that users understand the attribute correctly.",
     )
 
-    sql: str = Field(
-        default="",
+    sql: Optional[str] = Field(
+        default=None,
         description="A required parameter that defines the SQL expression used to derive the dimension's value. The SQL should return a value consistent with the dimension's type.",
     )
 
@@ -149,8 +150,8 @@ class V1CubeMetaMeasure(BaseModel):
         description="A description providing more context about what the measure represents. This is useful for ensuring that users understand the metric correctly.",
     )
 
-    sql: str = Field(
-        default="",
+    sql: Optional[str] = Field(
+        default=None,
         description="A required parameter that defines the SQL expression used to calculate the measure. Depending on the measure type, this can be an aggregation, a simple SQL expression, or even a calculation involving other measures.",
     )
 
