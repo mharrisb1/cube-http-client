@@ -1,6 +1,6 @@
 services:
   cube:
-    image: cubejs/cube:latest
+    image: cubejs/cube:v1.2
     volumes:
       - .:/cube/conf
     environment:

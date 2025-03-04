@@ -26,6 +26,13 @@ cubes:
         type: number
         primary_key: true
 
+      - name: crm_link
+        sql: "'https://attio.com/'"
+        type: string
+        format:
+          label: View in Attio
+          type: link
+
       - name: industry
         sql: industry
         type: string
