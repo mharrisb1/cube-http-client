@@ -203,6 +203,63 @@ for result in load_response.results:
         print("Used pre-aggregations:", result.used_pre_aggregations)
 ```
 
+### Custom Response Models
+
+You can provide custom response models to extend the default response models:
+
+```python
+from pydantic import Field
+from cube_http.types.v1.load_response import V1LoadResponse, V1LoadResult
+
+# Extend the default response model with additional fields
+class CustomLoadResult(V1LoadResult):
+    custom_field: str = Field(default=None, alias="customField")
+
+class CustomLoadResponse(V1LoadResponse):
+    custom_metadata: dict = Field(default_factory=dict, alias="customMetadata")
+
+# Use the custom response model
+response = cube.v1.load(
+    {
+        "query": {
+            "measures": ["tasks.count"],
+            "dimensions": ["tasks.status"],
+        }
+    },
+    response_model=CustomLoadResponse
+)
+
+# Access custom fields
+custom_metadata = response.custom_metadata
+```
+
+This feature is available for all endpoints:
+
+```python
+# For SQL endpoint
+from cube_http.types.v1.sql_response import V1SqlResponse
+
+class CustomSqlResponse(V1SqlResponse):
+    extra_data: dict = Field(default_factory=dict)
+
+sql_response = cube.v1.sql(
+    {"query": {"measures": ["tasks.count"]}},
+    response_model=CustomSqlResponse
+)
+
+# For Meta endpoint
+from cube_http.types.v1.meta_response import V1MetaResponse
+
+class CustomMetaResponse(V1MetaResponse):
+    extended_info: dict = Field(default_factory=dict)
+
+meta_response = cube.v1.meta(
+    response_model=CustomMetaResponse
+)
+```
+
+Custom response models are particularly useful when working with custom or extended Cube instances that return additional fields not covered by the default models.
+
 ### SQL Query Compilation
 
 You can retrieve the SQL that Cube would execute:
