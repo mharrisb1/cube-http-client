@@ -5,7 +5,7 @@ import cube_http
 
 def test_get_metadata(url: str, token: str):
     cube = cube_http.Client({"url": url, "token": token})
-    meta = cube.v1.meta(extended=True)
+    meta = cube.v1.meta({"extended": True})
     assert meta.cubes
     assert len(meta.cubes) > 0
 

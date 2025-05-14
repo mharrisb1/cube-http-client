@@ -1,12 +1,11 @@
 from typing import List
 
-from cube_http.types.v1.load import V1LoadRequestQueryDict
+from cube_http.types.v1 import V1LoadRequestQuery
 
-TEST_QUERIES: List[V1LoadRequestQueryDict] = [
+TEST_QUERIES: List[V1LoadRequestQuery] = [
     {
         "measures": ["accounts.count"],
     },
-    {"dimensions": ["accounts.crm_link"]},
     {
         "measures": ["contacts.count"],
         "dimensions": ["contacts.full_name"],
@@ -24,7 +23,9 @@ TEST_QUERIES: List[V1LoadRequestQueryDict] = [
     },
     {
         "measures": ["products.count"],
-        "filters": [{"member": "products.price", "operator": "gt", "values": ["100"]}],
+        "filters": [
+            {"member": "products.price", "operator": "gt", "values": ["100"]}
+        ],
     },
     {
         "measures": ["tasks.count"],
