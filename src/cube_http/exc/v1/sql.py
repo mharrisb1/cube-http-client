@@ -1,5 +1,5 @@
-from .._base import BaseError
+from ._base import V1BaseError
 
 
-class V1SqlError(BaseError):
+class V1SqlError(V1BaseError):
     pass

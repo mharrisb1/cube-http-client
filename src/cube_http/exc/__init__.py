@@ -1,3 +1,3 @@
-from . import v1
+from .v1 import V1LoadError, V1MetaError, V1SqlError
 
-__all__ = ["v1"]
+__all__ = ["V1LoadError", "V1MetaError", "V1SqlError"]
