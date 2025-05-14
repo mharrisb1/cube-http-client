@@ -1,3 +1,4 @@
-from ._client import Client, AsyncClient
+from .clients import Client, AsyncClient
+from . import exc
 
-__all__ = ["Client", "AsyncClient"]
+__all__ = ["Client", "AsyncClient", "exc"]
