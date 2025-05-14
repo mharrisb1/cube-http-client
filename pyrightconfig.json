@@ -1,0 +1,16 @@
+{
+  "typeCheckingMode": "strict",
+  "pythonVersion": "3.10",
+  "exclude": [
+    ".venv"
+  ],
+  "venvPath": ".",
+  "venv": ".venv",
+  "strictListInference": true,
+  "strictDictionaryInference": true,
+  "strictSetInference": true,
+  "reportMissingTypeStubs": true,
+  "reportUnusedImport": "error",
+  "reportPrivateUsage": "error",
+  "reportWildcardImportFromLibrary": "error"
+}

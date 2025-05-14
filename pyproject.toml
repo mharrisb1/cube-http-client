@@ -1,49 +1,55 @@
-[tool.poetry]
+[project]
+authors = [{ name = "Michael Harris", email = "mharris@definite.app" }]
+license = { text = "MIT" }
+requires-python = "<4.0,>=3.10"
+dependencies = ["httpx>=0.27", "pydantic<3,>=2"]
 name = "cube-http-client"
-version = "0.3.7"
+version = "0.4.0"
 description = "Pythonic HTTP client for Cube.js REST API (sync + async)"
-authors = ["Michael Harris <mharris@definite.app>"]
-license = "MIT"
 readme = "README.md"
 keywords = ["cube.js", "cube js", "cube.dev", "cube"]
+
+[project.urls]
 homepage = "https://github.com/mharrisb1/cube-http-client"
 repository = "https://github.com/mharrisb1/cube-http-client"
 documentation = "https://github.com/mharrisb1/cube-http-client"
-packages = [{ include = "cube_http", from = "src" }]
 
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-httpx = "^0.27.0"
-pydantic = ">=1,<3"
+[dependency-groups]
+dev = [
+  "deadcode>=2.4.1",
+  "pytest<9.0.0,>=8.3.2",
+  "pytest-asyncio<1.0.0,>=0.23.8",
+  "ruff>=0.11.9",
+  "ty>=0.0.1a1",
+]
 
-[tool.poetry.group.dev.dependencies]
-black = "^24.4.2"
-mypy = "^1.11.0"
-pytest = "^8.3.2"
-pytest-asyncio = "^0.23.8"
-tox = "^4.16.0"
+[tool.pdm.build]
+includes = ["src/cube_http"]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
-[tool.mypy]
-ignore_missing_imports = true
-
-[tool.black]
+[tool.ruff]
 line-length = 81
 
-[tool.pyright]
-typeCheckingMode = "strict"
-pythonVersion = "3.9"
-exclude = [".venv"]
-venvPath = "."
-venv = ".venv"
-strictListInference = true
-strictDictionaryInference = true
-strictSetInference = true
-reportMissingTypeStubs = false
-reportUnusedImport = "error"
-reportPrivateUsage = "none"
-reportWildcardImportFromLibrary = "none"
-reportMissingModuleSource = "none"
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = [
+  # pycodestyle
+  "E",
+  # Pyflakes
+  "F",
+  # pyupgrade
+  "UP",
+  # flake8-bugbear
+  "B",
+  # flake8-simplify
+  "SIM",
+  # isort
+  "I",
+]
+ignore = ["E501", "F403", "UP007", "UP035", "B008", "B904"]
+external = ["DC"]
