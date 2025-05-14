@@ -1,17 +1,10 @@
-from typing import Dict
-
 import httpx
-from pydantic import BaseModel
-
-from .._utils.serde import model_dict, model_parse
-
-
-class RequestModel(BaseModel):
-    def as_request_body(self) -> Dict[str, str]:
-        return model_dict(self, exclude_none=True, by_alias=True)
+from pydantic import BaseModel, ConfigDict
 
 
 class ResponseModel(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
     @classmethod
     def from_response(cls, res: httpx.Response):
-        return model_parse(cls, res.json())
+        return cls.model_validate(res.json())
