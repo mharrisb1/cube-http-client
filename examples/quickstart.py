@@ -1,5 +1,5 @@
 import cube_http
-from cube_http.types.v1 import V1LoadRequestQuery
+from cube_http.exc import V1LoadError
 
 if __name__ == "__main__":
     cube = cube_http.Client(
@@ -9,37 +9,31 @@ if __name__ == "__main__":
         }
     )
 
-    load_resp = cube.v1.load(
-        {
-            "measures": ["tasks.count"],
-            "filters": [
-                {
-                    "or": [
+    try:
+        load_resp = cube.v1.load(
+            {
+                "query": {
+                    "measures": ["tasks.count"],
+                    "filters": [
                         {
-                            "member": "tasks.status",
-                            "operator": "equals",
-                            "values": ["Completed"],
-                        },
-                        {
-                            "member": "tasks.priority",
-                            "operator": "equals",
-                            "values": ["High"],
-                        },
-                    ]
+                            "or": [
+                                {
+                                    "member": "tasks.status",
+                                    "operator": "equals",
+                                    "values": ["Completed"],
+                                },
+                                {
+                                    "member": "tasks.priority",
+                                    "operator": "equals",
+                                    "values": ["High"],
+                                },
+                            ]
+                        }
+                    ],
                 }
-            ],
-        },
-    )
+            }
+        )
 
-    results = load_resp.results
-
-    if results:
-        result = results[0]
-        print(result.data)
-
-        query = V1LoadRequestQuery.model_validate(result.query)
-
-        sql_resp = cube.v1.sql(query)
-        sql, params = sql_resp.sql.sql
-        print(sql)
-        print(params)
+        print(load_resp.model_dump())
+    except V1LoadError as e:
+        print("Error:", e)
