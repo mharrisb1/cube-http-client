@@ -73,6 +73,7 @@ def query_data(cube: cube_http.Client):
                         }
                     ],
                     "limit": 10,
+                    "order": [{"tasks.count": "desc"}],
                 }
             }
         )

@@ -74,7 +74,7 @@ class V1LoadRequestQuery(TypedDict):
     timeDimensions: NotRequired[list[V1LoadRequestQueryTimeDimension]]
     """List of time dimensions to be used in the query."""
 
-    order: NotRequired[list[list[str]]]
+    order: NotRequired[list[list[str]] | list[dict[str, str]]]
     """Ordering criteria for the query, specified as a dictionary of measures 
     or dimensions with `asc` or `desc` values."""
 
