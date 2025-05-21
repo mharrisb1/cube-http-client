@@ -70,28 +70,48 @@ cube = cube_http.Client(client_options)
 cube_async = cube_http.AsyncClient(client_options)
 ```
 
-You can also provide custom `httpx.Client` or `httpx.AsyncClient` instances:
+### Using Custom HTTP Clients
+
+You can provide custom `httpx.Client` or `httpx.AsyncClient` instances. The library will now extract configuration from the provided client and avoid duplication:
 
 ```python
 import httpx
 import cube_http
 
-# Custom synchronous client
-http_client = httpx.Client(
+# Option 1: Fully configured custom client
+custom_client = httpx.Client(
     base_url="http://localhost:4000/cubejs-api",
-    headers={"Authorization": "token", "Content-Type": "application/json"},
-    timeout=httpx.Timeout(10.0)
+    headers={
+        "Authorization": "your-api-token",
+        "Content-Type": "application/json",
+        "User-Agent": "CustomClient/1.0",
+    },
+    timeout=30.0,
 )
-cube = cube_http.Client({"http_client": http_client, "token": "token", "url": "http://localhost:4000/cubejs-api"})
+# No need to duplicate settings that are already in the custom client
+cube = cube_http.Client({"http_client": custom_client})
 
-# Custom asynchronous client
-async_http_client = httpx.AsyncClient(
-    base_url="http://localhost:4000/cubejs-api",
-    headers={"Authorization": "token", "Content-Type": "application/json"},
-    timeout=httpx.Timeout(10.0)
+# Option 2: Partially configured custom client with additional options
+custom_client = httpx.Client(
+    headers={"User-Agent": "CustomClient/1.0"},
+    timeout=15.0,
 )
-cube_async = cube_http.AsyncClient({"http_client": async_http_client, "token": "token", "url": "http://localhost:4000/cubejs-api"})
+# Provide only the missing required options
+cube = cube_http.Client({
+    "http_client": custom_client,
+    "url": "http://localhost:4000/cubejs-api",
+    "token": "your-api-token",
+    "default_headers": {"X-Custom-Header": "value"}
+})
 ```
+
+Options are merged intelligently:
+
+- If a setting exists in both the provided options and the custom client, the explicit option takes precedence
+- Required fields (url and token) can be provided either in the options or in the custom client
+- Custom headers are merged with the custom client's existing headers
+
+For more examples, see [custom_client_examples.py](examples/custom_client_examples.py).
 
 ## Detailed Usage
 
