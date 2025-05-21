@@ -104,10 +104,10 @@ async def async_context_manager_example():
 
             for i, result in enumerate(results):
                 if isinstance(result, BaseException):
-                    print(f"  Query {i+1} failed: {result}")
+                    print(f"  Query {i + 1} failed: {result}")
                 else:
                     print(
-                        f"  Query {i+1} returned {len(result.results[0].data)} records"
+                        f"  Query {i + 1} returned {len(result.results[0].data)} records"
                     )
 
         except V1MetaError as e:
