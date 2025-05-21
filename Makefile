@@ -36,14 +36,6 @@ test-%: setup
 example-%: setup
 	uv run python examples/$*.py
 
-# Run quickstart example
-example-quickstart: setup
-	uv run python examples/quickstart.py
-
-# Run async quickstart example
-example-async: setup
-	uv run python examples/async_quickstart.py
-
 # Run all examples (requires Docker environment)
 examples: setup
 	@echo "Running all examples..."
@@ -51,6 +43,7 @@ examples: setup
 	uv run python examples/async_quickstart.py
 	uv run python examples/custom_response_models.py
 	uv run python examples/context_manager_examples.py
+	uv run python examples/custom_client_examples.py
 	@echo "Examples completed."
 
 # Run all checks (format and static analysis don't require Docker)
@@ -74,6 +67,8 @@ clean: teardown
 	find . -type d -name ".ruff_cache" -exec rm -rf {} +
 	@echo "Cleanup complete."
 
+e2e: check examples clean
+
 # Display help
 help:
 	@echo "Available targets:"
@@ -84,8 +79,6 @@ help:
 	@echo "  make test            Run all tests (auto-starts Docker)"
 	@echo "  make test-PATTERN    Run tests matching PATTERN (auto-starts Docker)"
 	@echo "  make example-NAME    Run example/NAME.py (auto-starts Docker)"
-	@echo "  make example-quickstart  Run quickstart example (auto-starts Docker)"
-	@echo "  make example-async   Run async quickstart example (auto-starts Docker)"
 	@echo "  make examples        Run all examples (auto-starts Docker)"
 	@echo "  make check           Run all checks (format, static, test)"
 	@echo "  make clean           Clean up and stop Docker environment"
