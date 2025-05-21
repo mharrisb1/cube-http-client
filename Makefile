@@ -56,6 +56,10 @@ examples: setup
 # Run all checks (format and static analysis don't require Docker)
 check: format static test
 
+build:
+	rm -rf dist
+	uv build
+
 # Clean up
 clean: teardown
 	@echo "Cleaning up..."
@@ -85,6 +89,7 @@ help:
 	@echo "  make examples        Run all examples (auto-starts Docker)"
 	@echo "  make check           Run all checks (format, static, test)"
 	@echo "  make clean           Clean up and stop Docker environment"
+	@echo "  make build			  Clean out previous builds and build the project"
 	@echo "  make help            Show this help message"
 
 # Default target
