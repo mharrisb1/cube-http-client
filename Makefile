@@ -49,6 +49,8 @@ examples: setup
 	@echo "Running all examples..."
 	uv run python examples/quickstart.py
 	uv run python examples/async_quickstart.py
+	uv run python examples/custom_response_models.py
+	uv run python examples/context_manager_examples.py
 	@echo "Examples completed."
 
 # Run all checks (format and static analysis don't require Docker)
