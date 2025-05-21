@@ -1,5 +1,14 @@
 # Changelog
 
+<!--toc:start-->
+
+- [Changelog](#changelog)
+  - [[0.5.2] - 2025-05-21](#052-2025-05-21)
+  - [[0.5.1] - 2025-05-21](#051-2025-05-21)
+  - [[0.5.0] - 2025-05-21](#050-2025-05-21)
+  - [[0.4.2] - 2025-05-20](#042-2025-05-20)
+  <!--toc:end-->
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
@@ -10,24 +19,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.5.2] - 2025-05-21
 
-### Added
+**Added**
 
 - [#11: Merge client options with provided client](https://github.com/mharrisb1/cube-http-client/issues/11)
 
 ## [0.5.1] - 2025-05-21
 
-### Fixed
+**Fixed**
 
 - [#10: fix(models): add missing member names field](https://github.com/mharrisb1/cube-http-client/issues/10)
 
 ## [0.5.0] - 2025-05-21
 
-### Added
+**Added**
 
 - [#9: feat(client): add context manager API](https://github.com/mharrisb1/cube-http-client/issues/9)
 
 ## [0.4.2] - 2025-05-20
 
-### Fixed
+**Fixed**
 
 - [#8: fix(types): allow dict-style order in query request](https://github.com/mharrisb1/cube-http-client/issues/8)
