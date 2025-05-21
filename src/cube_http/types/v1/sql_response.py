@@ -13,6 +13,9 @@ class V1SqlResult(BaseModel):
         default=None,
         alias="aliasNameToMember",
     )
+    member_names: list[str] | None = Field(
+        default=None, description="Member names", alias="memberNames"
+    )
     cache_key_queries: list[Any] | None = Field(
         default=None, alias="cacheKeyQueries"
     )
