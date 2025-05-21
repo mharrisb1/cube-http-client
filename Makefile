@@ -69,6 +69,10 @@ clean: teardown
 
 e2e: check examples clean
 
+version-%:
+	uvx --from=toml-cli toml set --toml-path=pyproject.toml project.version $*
+	rm -rf dist && uv build
+
 # Display help
 help:
 	@echo "Available targets:"
