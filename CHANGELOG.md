@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > [!NOTE]
 > For missing releases or more detail on releases, please refer to [releases](https://github.com/mharrisb1/cube-http-client/releases)
 
+## [0.5.2] - 2025-05-21
+
+### Added
+
+- [#11: Merge client options with provided client](https://github.com/mharrisb1/cube-http-client/issues/11)
+
 ## [0.5.1] - 2025-05-21
 
 ### Fixed
