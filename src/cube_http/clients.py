@@ -55,6 +55,21 @@ class Client:
             transport=httpx.HTTPTransport(retries=options.get("max_retries", 0)),
         )
 
+    def __enter__(self) -> "Client":
+        return self
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: Any,
+    ) -> None:
+        self.close()
+
+    def close(self) -> None:
+        """Close the underlying HTTP client."""
+        self._http_client.close()
+
     @cached_property
     def v1(self) -> SyncV1Routes:
         return SyncV1Routes(self._http_client)
@@ -78,6 +93,21 @@ class AsyncClient:
                 retries=options.get("max_retries", 0)
             ),
         )
+
+    async def __aenter__(self) -> "AsyncClient":
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: Any,
+    ) -> None:
+        await self.close()
+
+    async def close(self) -> None:
+        """Close the underlying HTTP client."""
+        await self._http_client.aclose()
 
     @cached_property
     def v1(self) -> AsyncV1Routes:

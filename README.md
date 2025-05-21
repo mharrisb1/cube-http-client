@@ -129,6 +129,47 @@ try:
 
 except V1LoadError as e:
     print(f"Error loading data: {e}")
+finally:
+    # Close the client when done
+    cube.close()
+```
+
+### Using Context Managers
+
+Both synchronous and asynchronous clients support context managers for automatic resource cleanup:
+
+```python
+import cube_http
+
+# Synchronous context manager
+with cube_http.Client({
+    "url": "http://localhost:4000/cubejs-api",
+    "token": "your-api-token",
+}) as cube:
+    # Execute queries
+    meta_resp = cube.v1.meta()
+    load_resp = cube.v1.load({
+        "query": {
+            "measures": ["tasks.count"],
+            "dimensions": ["tasks.status"],
+        }
+    })
+    # Client is automatically closed after the with block
+
+# Asynchronous context manager
+async with cube_http.AsyncClient({
+    "url": "http://localhost:4000/cubejs-api",
+    "token": "your-api-token",
+}) as cube:
+    # Execute async queries
+    meta_resp = await cube.v1.meta()
+    load_resp = await cube.v1.load({
+        "query": {
+            "measures": ["tasks.count"],
+            "dimensions": ["tasks.status"],
+        }
+    })
+    # Async client is automatically closed after the async with block
 ```
 
 ### Asynchronous
@@ -162,9 +203,28 @@ async def get_metadata():
 
     except V1MetaError as e:
         print(f"Error fetching metadata: {e}")
+    finally:
+        # Close the async client when done
+        await cube.close()
 
 # Run the async function
 asyncio.run(get_metadata())
+
+# Alternative using context manager
+async def get_metadata_with_context():
+    # Use async client with context manager for automatic cleanup
+    async with cube_http.AsyncClient({
+        "url": "http://localhost:4000/cubejs-api",
+        "token": "your-api-token",
+        "timeout": 30.0
+    }) as cube:
+        # Fetch metadata
+        meta_response = await cube.v1.meta()
+        # Process data...
+    # Client is automatically closed when exiting the context
+
+# Run with async context manager
+asyncio.run(get_metadata_with_context())
 ```
 
 ### Working with Query Responses
