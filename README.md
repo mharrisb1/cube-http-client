@@ -1,5 +1,23 @@
 # cube-http-client
 
+<!--toc:start-->
+
+- [cube-http-client](#cube-http-client)
+  - [Installation](#installation)
+  - [Quickstart](#quickstart)
+  - [Client Configuration](#client-configuration)
+    - [Using Custom HTTP Clients](#using-custom-http-clients)
+  - [Detailed Usage](#detailed-usage)
+    - [Synchronous](#synchronous)
+    - [Using Context Managers](#using-context-managers)
+    - [Asynchronous](#asynchronous)
+    - [Working with Query Responses](#working-with-query-responses)
+    - [Custom Response Models](#custom-response-models)
+    - [SQL Query Compilation](#sql-query-compilation)
+    - [Error Handling](#error-handling)
+  - [Support Coverage](#support-coverage)
+  <!--toc:end-->
+
 Pythonic HTTP client for [Cube.dev](https://cube.dev) REST API (sync + async support)
 
 ## Installation
