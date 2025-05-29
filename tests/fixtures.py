@@ -1,8 +1,6 @@
-from typing import List
-
 from cube_http.types.v1 import V1LoadRequestQuery
 
-TEST_QUERIES: List[V1LoadRequestQuery] = [
+TEST_QUERIES: list[V1LoadRequestQuery] = [
     {
         "measures": ["accounts.count"],
     },
