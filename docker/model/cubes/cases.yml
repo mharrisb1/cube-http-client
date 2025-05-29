@@ -3,6 +3,10 @@ cubes:
     sql_table: public.cases
     data_source: default
 
+    # https://github.com/mharrisb1/cube-http-client/issues/14
+    access_policy:
+      - role: "foobar"
+
     joins:
       - name: accounts
         sql: "{CUBE}.account_id = {accounts}.id"

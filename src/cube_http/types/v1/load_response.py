@@ -97,7 +97,7 @@ class V1LoadRequestQuery(BaseModel):
         default=None, description="List of dimensions to be queried."
     )
 
-    segments: list[str] | None = Field(
+    segments: list[str] | list[dict[str, Any]] | None = Field(
         default=None,
         description="List of segments to be used in the query. "
         "A segment is a named filter defined in the data model.",
