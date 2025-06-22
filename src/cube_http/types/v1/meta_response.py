@@ -1,4 +1,5 @@
 from typing import Any, Literal
+
 from pydantic import BaseModel, Field
 
 from .._base import ResponseModel
@@ -33,6 +34,22 @@ class V1CubeMetaSegment(BaseModel):
     name: str = Field(
         default="",
         description="The unique identifier for the segment. It must be unique among all segments, dimensions, and measures within a cube and follow naming conventions.",
+    )
+
+    title: str | None = Field(
+        default=None,
+        description="A human-readable display name for the segment. By default, Cube will humanize the segment's title, but you can use this parameter to customize it.",
+    )
+
+    short_title: str | None = Field(
+        default=None,
+        alias="shortTitle",
+        description="A short human-readable name for the segment. This can be used in places where a shorter label is needed.",
+    )
+
+    description: str | None = Field(
+        default=None,
+        description="A description providing more context about what the segment represents. This is useful for ensuring that users understand the attribute correctly.",
     )
 
     sql: str | None = Field(
