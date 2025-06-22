@@ -55,3 +55,19 @@ cubes:
         type: countDistinct
         sql: industry
         description: "Counts the number of distinct industries."
+
+    segments:
+      - name: active_accounts
+        title: Active Accounts
+        sql: "{CUBE}.status = 'active'"
+        description: "Accounts with active status"
+
+      - name: recently_created
+        title: Recently Created
+        sql: "{CUBE}.created_at >= NOW() - INTERVAL '30 days'"
+        description: "Accounts created in the last 30 days"
+
+      - name: tech_industry
+        title: Tech Industry
+        sql: "{CUBE}.industry = 'Technology'"
+        description: "Accounts in the technology industry"
