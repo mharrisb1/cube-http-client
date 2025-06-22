@@ -2,12 +2,12 @@
 
 <!--toc:start-->
 
-- [Changelog](#changelog)
-  - [[0.5.2] - 2025-05-21](#052-2025-05-21)
-  - [[0.5.1] - 2025-05-21](#051-2025-05-21)
-  - [[0.5.0] - 2025-05-21](#050-2025-05-21)
-  - [[0.4.2] - 2025-05-20](#042-2025-05-20)
-  <!--toc:end-->
+- [[0.5.3] - 2025-06-22](#053-2025-06-22)
+- [[0.5.2] - 2025-05-21](#052-2025-05-21)
+- [[0.5.1] - 2025-05-21](#051-2025-05-21)
+- [[0.5.0] - 2025-05-21](#050-2025-05-21)
+- [[0.4.2] - 2025-05-20](#042-2025-05-20)
+<!--toc:end-->
 
 All notable changes to this project will be documented in this file.
 
@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > [!NOTE]
 > For missing releases or more detail on releases, please refer to [releases](https://github.com/mharrisb1/cube-http-client/releases)
+
+## [0.5.3] - 2025-06-22
+
+**Fixed**
+
+- Adds missing `title`, `shortTitle`, and `description` fields to segments model
 
 ## [0.5.2] - 2025-05-21
 
