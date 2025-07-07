@@ -17,6 +17,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > [!NOTE]
 > For missing releases or more detail on releases, please refer to [releases](https://github.com/mharrisb1/cube-http-client/releases)
 
+## [0.6.0] - 2025-07-07
+
+**Added**
+
+- [#17: fix: add type to meta response](https://github.com/mharrisb1/cube-http-client/issues/17)
+- [#19: chore(tests): add view to model fixtures](https://github.com/mharrisb1/cube-http-client/issues/19)
+
+**Fixed**
+
+- [#18: fix: method signature from reqeust to request](https://github.com/mharrisb1/cube-http-client/issues/18)
+
 ## [0.5.3] - 2025-06-22
 
 **Fixed**
