@@ -237,7 +237,7 @@ class V1CubeMeta(BaseModel):
         description="The unique identifier for the cube. Must be unique among all cubes and views within a deployment and follow the naming conventions."
     )
 
-    type: str | None = Field(
+    type: Literal["view", "cube"] | None = Field(
         alias="type",
         default=None,
         description="Specifies the type of the cube. This can be used to differentiate between different types of cubes, such as `view` or `cube`.",
