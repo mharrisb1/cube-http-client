@@ -1,0 +1,23 @@
+views:
+  - name: test_view
+    title: "Test View for Meta Response Type Field"
+    description: "Test view to validate the new type field in meta response from PR #17"
+    
+    cubes:
+      - join_path: accounts
+        includes:
+          - id
+          - name
+          - industry
+          - created_at
+          - count
+          - distinct_industries
+          
+      - join_path: accounts.opportunities
+        prefix: true
+        includes:
+          - name
+          - stage
+          - amount
+          - count
+          - total_amount
