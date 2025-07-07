@@ -12,7 +12,7 @@ class SyncMetaRoute(SyncRoute):
     @overload
     def meta(
         self,
-        reqeust: V1MetaRequest | None = None,
+        request: V1MetaRequest | None = None,
         *,
         response_model: None = None,
     ) -> V1MetaResponse: ...
@@ -20,14 +20,14 @@ class SyncMetaRoute(SyncRoute):
     @overload
     def meta(
         self,
-        reqeust: V1MetaRequest | None = None,
+        request: V1MetaRequest | None = None,
         *,
         response_model: type[T],
     ) -> T: ...
 
     def meta(
         self,
-        reqeust: V1MetaRequest | None = None,
+        request: V1MetaRequest | None = None,
         *,
         response_model: type[T] | None = None,
     ) -> T | V1MetaResponse:
@@ -35,7 +35,7 @@ class SyncMetaRoute(SyncRoute):
         Get metadata.
 
         Args:
-            reqeust: Optional meta request parameters
+            request: Optional meta request parameters
             response_model: Optional custom response model class to use instead of the default
                             Must inherit from `V1MetaResponse` model.
 
@@ -45,7 +45,7 @@ class SyncMetaRoute(SyncRoute):
         Raises:
             V1MetaError: If the request failed
         """
-        res = self._get("/v1/meta", params=reqeust or {})
+        res = self._get("/v1/meta", params=request or {})
         if res.status_code == 200:
             if response_model is not None:
                 return response_model.from_response(res)
@@ -58,7 +58,7 @@ class AsyncMetaRoute(AsyncRoute):
     @overload
     async def meta(
         self,
-        reqeust: V1MetaRequest | None = None,
+        request: V1MetaRequest | None = None,
         *,
         response_model: None = None,
     ) -> V1MetaResponse: ...
@@ -66,14 +66,14 @@ class AsyncMetaRoute(AsyncRoute):
     @overload
     async def meta(
         self,
-        reqeust: V1MetaRequest | None = None,
+        request: V1MetaRequest | None = None,
         *,
         response_model: type[T],
     ) -> T: ...
 
     async def meta(
         self,
-        reqeust: V1MetaRequest | None = None,
+        request: V1MetaRequest | None = None,
         *,
         response_model: type[T] | None = None,
     ) -> T | V1MetaResponse:
@@ -81,7 +81,7 @@ class AsyncMetaRoute(AsyncRoute):
         Get metadata asynchronously.
 
         Args:
-            reqeust: Optional meta request parameters
+            request: Optional meta request parameters
             response_model: Optional custom response model class to use instead of the default
                             Must inherit from `V1MetaResponse` model.
 
@@ -91,7 +91,7 @@ class AsyncMetaRoute(AsyncRoute):
         Raises:
             V1MetaError: If the request failed
         """
-        res = await self._get("/v1/meta", params=reqeust or {})
+        res = await self._get("/v1/meta", params=request or {})
         if res.status_code == 200:
             if response_model is not None:
                 return response_model.from_response(res)
