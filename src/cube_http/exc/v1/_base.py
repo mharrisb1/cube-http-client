@@ -1,5 +1,7 @@
+from json.decoder import JSONDecodeError
+
 import httpx
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
 
 class V1Error(BaseModel):
@@ -14,10 +16,14 @@ class V1BaseError(Exception):
 
     @classmethod
     def from_response(cls, res: httpx.Response) -> "V1BaseError":
-        return cls(
-            status_code=res.status_code,
-            error=V1Error.model_validate(res.json()).error,
-        )
+        try:
+            error = V1Error.model_validate(res.json()).error
+        except ValidationError:
+            error = "Invalid response from server"
+        except JSONDecodeError:
+            error = res.text
+
+        return cls(status_code=res.status_code, error=error)
 
     def __str__(self) -> str:
         return f"Returned status code {self.status_code}. Reason: {self.error}"
